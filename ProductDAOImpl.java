@@ -2,8 +2,6 @@ package com.niit.shoppingcart.dao;
 
 import java.util.List;
 
-import java.util.List;
-
 import javax.management.Query;
 
 import org.hibernate.HibernateException;
@@ -13,24 +11,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.niit.shoppingcart.model.Category;
+import com.niit.shoppingcart.model.Product;
 
-@Repository(value="CategoryDAO")
 
-public class CategoryDAOImpl implements CategoryDAO {
+@Repository(value="productDAO")
+
+public class ProductDAOImpl implements ProductDAO {
 
 	private static final Query SessionFactory = null;
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public CategoryDAOImpl(SessionFactory sessionFactory) {
+	public ProductDAOImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 
 	}
    @Transactional
-	public boolean save(Category category) {
+	public boolean save(Product product) {
 		try {
-			sessionFactory.getCurrentSession().save(category);
+			sessionFactory.getCurrentSession().save(product);
 			return true;
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
@@ -40,9 +39,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	}
    @Transactional
-	public boolean update(Category category) {
+	public boolean update(Product product) {
 		try {
-			sessionFactory.getCurrentSession().update(category);
+			sessionFactory.getCurrentSession().update(product);
 			return true;
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
@@ -52,9 +51,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	}
 @Transactional
-	public boolean delete(Category category) {
+	public boolean delete(Product product) {
 		try {
-			sessionFactory.getCurrentSession().delete(category);
+			sessionFactory.getCurrentSession().delete(product);
 			return true;
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
@@ -64,11 +63,11 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	}
 @Transactional
-	public Category get(String id) {
+	public Product get(String id) {
 
-		String hql = "from Category where id=" + " ' " + id + "'";
+		String hql = "from product where id=" + " ' " + id + "'";
 		org.hibernate.Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List<Category> list = query.list();
+		List<Product> list = query.list();
 		if (list == null)
 
 			return null;
@@ -77,8 +76,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 		}
 	}
 @Transactional
-	public List<Category> list() {
-		String hql = "from Category";
+	public List<Product> list() {
+		String hql = "from product";
 		org.hibernate.Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		return query.list();
 
