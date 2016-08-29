@@ -4,24 +4,29 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.niit.shoppingcart.model.Category;
 import com.niit.shoppingcart.model.UserDetails;
 
-@Repository
+
+
+
+@Repository ()
 public interface UserDetailsDAO {
 
 	//Declare all CRUD Operation 
 	
 	
-	public boolean save (UserDetails UserDetails);
+	public boolean save (UserDetails userDetails);
 	
 	
-	public boolean update (UserDetails UserDetails);
+	public boolean update (UserDetails userDetails);
 	
-	public boolean delete (UserDetails UserDetails);
+	public boolean delete (UserDetails userDetails);
 	
 	public  UserDetails       get(String id);
 	
 	public List<UserDetails>       list();
+	
+	public UserDetails isValidUser(String id,String password);
+	
 	
 }
