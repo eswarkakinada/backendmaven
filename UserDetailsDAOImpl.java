@@ -19,7 +19,7 @@ import com.niit.shoppingcart.model.UserDetails;
 public class UserDetailsDAOImpl implements UserDetailsDAO {
 
 		@Autowired
-	private SessionFactory sessionFactory;
+	private SessionFactory session;
 
 	public UserDetailsDAOImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
