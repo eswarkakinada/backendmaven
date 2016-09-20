@@ -1,0 +1,105 @@
+package com.niit.shoppingcart.dao;
+
+import java.util.List;
+
+
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
+//we have to import slf4j
+import com.niit.shoppingcart.model.Product;
+
+@EnableTransactionManagement
+@Repository(value="productDAO")
+
+public class ProductDAOImpl implements ProductDAO {
+ // private static final Logger Log = LoggerFactory.grtLogger(ProductDAOImpl.class);
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	public ProductDAOImpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+
+	}
+   @Transactional
+	public boolean save(Product product) {
+		try {
+	//		Log.debug("Starting of the method save");
+			
+			sessionFactory.getCurrentSession().save(product);
+			
+		//	Log.debug("Ending of the method save");
+			return true;
+		} catch (Exception e) {
+		//	Log.error("Error occured :"+e.getMessage());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+   @Transactional
+	public boolean update(Product product) {
+		try {
+		//	Log.debug("Starting of the method Update");
+			sessionFactory.getCurrentSession().update(product);
+		//	Log.debug("Ending of the method Update");
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+@Transactional
+	public boolean delete(Product product) {
+		try {
+		//	Log.debug("Starting of the method Delete");
+			sessionFactory.getCurrentSession().delete(product);
+		//	Log.debug("Ending of the method Delete");
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+@Transactional
+	public Product get(String id) {
+//	Log.debug("Starting of the method get");
+//	Log.info("Trying to get product based on id:"+id);
+		String hql = "from product where id=" + " ' " + id + "'";
+		org.hibernate.Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		
+	//	Query quert =sessionFactory.getCurrentSession().createQuery(hql);
+		List<Product> list = query.list();
+		if (list == null)
+// Log.info("No products are available with thid id :"+id);
+			return null;
+		else {
+			return list.get(0);
+		}
+	}
+@Transactional
+	public List<Product> list() {
+	
+//	Log.debug(""Starting of the method list);
+		String hql = "from product";
+	Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		return query.list();
+
+	}
+}
+
+
